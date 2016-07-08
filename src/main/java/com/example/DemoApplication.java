@@ -3,6 +3,7 @@ package com.example;
 import com.example.domain.PersonData;
 import com.example.domain.tables.Person;
 import com.example.domain.tables.records.PersonRecord;
+import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 import org.jooq.DSLContext;
 import org.jooq.InsertResultStep;
@@ -51,11 +52,9 @@ public class DemoApplication {
 	List<PersonData> getPersons() {
 		List<PersonData> persons = new ArrayList<>();
 		final Result<Record> records = dslContext.select().from(Person.PERSON).fetch();
-		
-		for (Record record : records) {
-			persons.add(new PersonData((String) record.get("name")));
-		}
-		return persons;
+
+		List<PersonData> data = Lists.transform(records, (record)->(new PersonData((String)record.get("name"))));
+		return data;
 	}
 
 	public static void main(String[] args) {
