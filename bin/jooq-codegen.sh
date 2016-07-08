@@ -1,0 +1,1 @@
+mvn org.jooq:jooq-codegen-maven:3.8.1:generate
